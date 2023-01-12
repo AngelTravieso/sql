@@ -26,6 +26,58 @@ JOIN productos ON VD_ProdId = Prod_Id
 JOIN proveedores ON Prod_ProvId = Prov_Id
 JOIN clientes ON Cli_Id = Ventas_CliId
 
+
+-- LEFT JOIN, da prioridad al conjunto (tabla) izquierda
+SELECT
+	Ventas_Id AS 'Nro.Venta',
+	Ventas_Fecha AS 'Fecha',
+	VD_Precio AS 'Precio',
+	Ventas_Total AS 'Total'
+FROM ventas
+LEFT JOIN ventas_detalle ON Ventas_Id = VD_Id
+
+-- RIGHT JOIN, da prioridad al conjunto (tabla) derecha
+SELECT
+	Ventas_Id AS 'Nro.Venta',
+	Ventas_Fecha AS 'Fecha',
+	VD_Precio AS 'Precio',
+	Ventas_Total AS 'Total'
+FROM ventas
+RIGHT JOIN ventas_detalle ON Ventas_Id = VD_Id
+
+-- CLAUSULA UNION para combinar resultados de varios SELECT
+SELECT
+	Ventas_Id AS 'Nro.Venta',
+	Ventas_Fecha AS 'Fecha',
+	VD_Precio AS 'Precio',
+	Ventas_Total AS 'Total'
+FROM ventas
+LEFT JOIN ventas_detalle ON Ventas_Id = VD_Id
+UNION
+SELECT
+	Ventas_Id AS 'Nro.Venta',
+	Ventas_Fecha AS 'Fecha',
+	VD_Precio AS 'Precio',
+	Ventas_Total AS 'Total'
+FROM ventas
+RIGHT JOIN ventas_detalle ON Ventas_Id = VD_Id
+
+/*
+	FULL JOIN no funciona en MYSQL,
+	para eso se usa la clausula UNION
+*/
+
+-- FULL JOIN simulado con UNION
+SELECT
+	*
+FROM ventas
+LEFT JOIN ventas_detalle ON VD_Id = Ventas_Id
+UNION
+SELECT
+	*
+FROM ventas
+RIGHT JOIN ventas_detalle ON VD_Id = Ventas_Id
+
 -- si el orden es incorrecto no funcionara
 /* SELECT
 	Ventas_Fecha,
